@@ -1,102 +1,64 @@
-# Assignment 1: Recursion
-### Name: Altynbayev Yerassyl
-### Group: IT-2504
+# Assignment 2: Physical & Logical Data Structures (Banking System)
 
-Work Process Summary
-In this assignment, I implemented 10 recursive functions in Java without using any loops (for, while).
-Each solution focuses on a base case to stop recursion and a recursive step to solve the problem.
----
-Part 1: Numbers
-Task 1: Print Digits
-Output check:
-[Task 1 Screen](../screens/task1.png)
+**Student:** Altynbayev Yerassyl  
+**Group:** IT-2504
 
-Task 2: Average of Elements
-Output check:
-[Task 2 Screen](../screens/task2.png)
+##  Objective
+The primary goal of this project is to implement a simulated mini-banking system utilizing various Java data structures. This assignment demonstrates the practical differences and use cases between physical data structures (Arrays) and logical data structures (LinkedList, Stack, Queue).
 
-Task 3: Prime Number Check
-Output check:
-[Task 3 Screen](../screens/task3.png)
-
-Task 4: Factorial
-Output check:
-![Task 4 Screen](../screens/task4.png)
----
-Part 2: Sequences
-
-Task 5: Fibonacci Number
-Output check:
-![Task 5 Screen](../screens/task5.png)
-
-Task 6: Power Function
-Output check:
-![Task 6 Screen](../screens/task6.png)
-
-Task 7: Reverse Output
-Output check:
-![Task 7 Screen](../screens/task7.png)
----
-Part 3: Strings and GCD
-
-Task 8: Check Digits in String
-Output check:
-![Task 8 Screen](../screens/task8.png)
-
-Task 9: Count Characters
-Output check:
-![Task 9 Screen](../screens/task9.png)
-
-Task 10: Greatest Common Divisor
-Output check:
-![Task 10 Screen](../screens/task10.png)
-
-## Part 1: Numbers
-
-### Task 1: Print Digits of a Number
-**Description:** A function that receives an integer and prints its digits one by one on new lines.
-* **Logic:** The function calls itself with n / 10 to reach the most significant digit first. The print statement is placed after the recursive call so that digits are displayed in the correct order as the stack unwinds.
-
-### Task 2: Average of Elements
-**Description:** Calculates the mean value of elements in an array.
-* **Logic:** One recursive method fills the array, while another calculates the total sum by adding the current index element to the sum of the rest. The final result is the total sum divided by the array length.
-
-### Task 3: Prime Number Check
-**Description:** Determines if a positive integer is a prime number.
-* **Logic:** A helper function checks for divisors starting from 2. It recursively increments the divisor; if it reaches the number without finding a divisor, the number is Prime.
-
-### Task 4: Factorial
-**Description:** Computes the factorial of $n$.
-* **Logic:** Uses the standard recurrence $n \times (n-1)!$ with the base case where $1! = 1$.
+##  Data Structures Implemented
+* **LinkedList (`accounts`)**: Serves as the main database for storing bank accounts. It allows for dynamic resizing and efficient management as new clients are added to the system.
+* **Stack (`transactionHistory`)**: Implements **LIFO** (Last-In, First-Out) for logging transaction actions (deposits, withdrawals, bills). This structure allows the system to easily "Undo" the most recent financial action.
+* **Queue (`accountRequests`)**: Manages new account opening requests using the **FIFO** (First-In, First-Out) principle, ensuring fair sequential processing by the administrator.
+* **Queue (`billQueue`)**: Handles utility bill payment requests in the exact order they were submitted.
+* **Array**: Utilized for the physical storage of predefined bank accounts before integrating them into the broader logical systems.
 
 ---
 
-##  Part 2: Sequences
+## Program Execution & Task Screenshots
+*(Screenshots demonstrating the functionality of each required task)*
 
-### Task 5: Fibonacci Number
-**Description:** Returns the $n$-th element of the Fibonacci sequence.
-* **Logic:** Implemented by summing the results of two recursive calls: $F(n-1) + F(n-2)$.
+### Part 1: Logical Data Structures
 
-### Task 6: Power Function
-**Description:** Calculates $a$ raised to the power of $n$ ($a^n$).
-* **Logic:** The base $a$ is multiplied by the result of the function with the exponent reduced by 1 until the exponent hits 0.
+**Task 1: Bank Account Storage Using LinkedList**
+*Functionality: Added new accounts, displayed all accounts, and searched by username.*
+> ![Task1.png](img.png)
 
-### Task 7: Reverse Output
-**Description:** Reads $n$ integers and prints them in reverse order.
-* **Logic:** The program reads a number and immediately calls itself. The System.out.println is executed only after the recursive call returns, utilizing the LIFO (Last-In-First-Out) nature of the stack.
+**Task 2: Deposit & Withdraw Operations**
+*Functionality: Successfully updated balances inside the LinkedList upon deposit and withdrawal.*
+> ![img.png](img.png)
+
+**Task 3: Transaction History (Stack LIFO)**
+*Functionality: Added transactions, displayed the last action (peek), and reverted the last action (pop).*
+> ![img_1.png](img_1.png)
+
+**Task 4: Bill Payment Queue (Queue FIFO)**
+*Functionality: Added and processed bill payment requests in sequential order.*
+> ![img_2.png](img_2.png)
+
+**Task 5: Account Opening Queue (Admin Simulation)**
+*Functionality: Submitted user requests and processed them into the main LinkedList.*
+> ![img_3.png](img_3.png)
+
+### Part 2: Physical Data Structures
+
+**Task 6: Array Implementation**
+*Functionality: Created an array `BankAccount[3]`, stored predefined accounts, and printed them.*
+> ![img_4.png](img_4.png)
+
+### Part 3: Mini Banking Menu Integration
+
+**Bank, ATM, and Admin Menus**
+*Functionality: Integrated all tasks into a single interactive console menu.*
+> ![img_5.png](img_5.png)
 
 ---
 
-##  Part 3: Strings and GCD
-
-### Task 8: Check Digits in String
-**Description:** Validates if a string contains only numeric characters.
-* **Logic:** The function checks the character at the current index. If it's a digit, it moves to the next; otherwise, it returns "No".
-
-### Task 9: Count Characters
-**Description:** Returns the total length of a string.
-* **Logic:** Calculated as $1 + \text{length}$ of the remaining substring. The base case is an empty string (length 0).
-
-### Task 10: Greatest Common Divisor
-**Description:** Finds the GCD using the Euclidean Algorithm.
-* **Logic:** The function recursively calls itself with (b, a % b) until the second parameter becomes 0.
+## Summary of Work Process
+1. **Project Setup**: Designed the `BankAccount` class to encapsulate essential client data, including `accountNumber`, `username`, and `balance`.
+2. **Core Implementation**:
+    * Linked the `Stack` to every deposit and withdrawal method to accurately support the "Undo" feature required in Task 3.
+    * Utilized `Collections.addAll` to efficiently migrate predefined physical array data into the dynamic `LinkedList`.
+    * Designed the interactive console menu to properly route the user to Bank, ATM, or Admin functionalities.
+3. **Testing & Validation**: Verified that all logical queues behaved strictly according to FIFO and stacks according to LIFO. Ensured that the application runs without errors as per submission requirements.
+4. **Issues Encountered & Solutions**: A significant issue arose with Java's `Scanner` class skipping `String` inputs (like usernames) immediately after reading integers with `nextInt()`. I resolved this by inserting a `nextLine()` buffer clear after numerical inputs to properly consume the leftover newline character.
