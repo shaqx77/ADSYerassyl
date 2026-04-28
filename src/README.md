@@ -1,64 +1,50 @@
-# Assignment 2: Physical & Logical Data Structures (Banking System)
+***
 
-**Student:** Altynbayev Yerassyl  
-**Group:** IT-2504
+# **Assignment 3: Sorting and Searching Algorithm Analysis System**
 
-##  Objective
-The primary goal of this project is to implement a simulated mini-banking system utilizing various Java data structures. This assignment demonstrates the practical differences and use cases between physical data structures (Arrays) and logical data structures (LinkedList, Stack, Queue).
+## **A. Project Overview**
+This project is an algorithm analysis system designed to implement and compare fundamental sorting and searching techniques. The primary goal is to measure and analyze performance using execution time in nanoseconds across different array sizes and structures.
 
-##  Data Structures Implemented
-* **LinkedList (`accounts`)**: Serves as the main database for storing bank accounts. It allows for dynamic resizing and efficient management as new clients are added to the system.
-* **Stack (`transactionHistory`)**: Implements **LIFO** (Last-In, First-Out) for logging transaction actions (deposits, withdrawals, bills). This structure allows the system to easily "Undo" the most recent financial action.
-* **Queue (`accountRequests`)**: Manages new account opening requests using the **FIFO** (First-In, First-Out) principle, ensuring fair sequential processing by the administrator.
-* **Queue (`billQueue`)**: Handles utility bill payment requests in the exact order they were submitted.
-* **Array**: Utilized for the physical storage of predefined bank accounts before integrating them into the broader logical systems.
+## **B. Algorithm Descriptions**
 
----
+### **1. Insertion Sort (Basic Sorting)**
+* **Description**: A simple sorting algorithm that builds the final sorted array one item at a time by repeatedly taking the next element and inserting it into the correct position among those already sorted.
+* **Complexity**: **$O(n^2)$** for average and worst cases.
 
-## Program Execution & Task Screenshots
-*(Screenshots demonstrating the functionality of each required task)*
+### **2. Merge Sort (Advanced Sorting)**
+* **Description**: An efficient, stable, divide-and-conquer algorithm that recursively divides the array into halves, sorts them, and merges them back together.
+* **Complexity**: **$O(n \log n)$** for all cases.
 
-### Part 1: Logical Data Structures
-
-**Task 1: Bank Account Storage Using LinkedList**
-*Functionality: Added new accounts, displayed all accounts, and searched by username.*
-> ![Task1.png](img.png)
-
-**Task 2: Deposit & Withdraw Operations**
-*Functionality: Successfully updated balances inside the LinkedList upon deposit and withdrawal.*
-> ![img.png](img.png)
-
-**Task 3: Transaction History (Stack LIFO)**
-*Functionality: Added transactions, displayed the last action (peek), and reverted the last action (pop).*
-> ![img_1.png](img_1.png)
-
-**Task 4: Bill Payment Queue (Queue FIFO)**
-*Functionality: Added and processed bill payment requests in sequential order.*
-> ![img_2.png](img_2.png)
-
-**Task 5: Account Opening Queue (Admin Simulation)**
-*Functionality: Submitted user requests and processed them into the main LinkedList.*
-> ![img_3.png](img_3.png)
-
-### Part 2: Physical Data Structures
-
-**Task 6: Array Implementation**
-*Functionality: Created an array `BankAccount[3]`, stored predefined accounts, and printed them.*
-> ![img_4.png](img_4.png)
-
-### Part 3: Mini Banking Menu Integration
-
-**Bank, ATM, and Admin Menus**
-*Functionality: Integrated all tasks into a single interactive console menu.*
-> ![img_5.png](img_5.png)
+### **3. Binary Search (Searching)**
+* **Description**: An efficient search algorithm that finds the position of a target value within a **sorted** array by repeatedly dividing the search interval in half.
+* **Complexity**: **$O(\log n)$**.
 
 ---
 
-## Summary of Work Process
-1. **Project Setup**: Designed the `BankAccount` class to encapsulate essential client data, including `accountNumber`, `username`, and `balance`.
-2. **Core Implementation**:
-    * Linked the `Stack` to every deposit and withdrawal method to accurately support the "Undo" feature required in Task 3.
-    * Utilized `Collections.addAll` to efficiently migrate predefined physical array data into the dynamic `LinkedList`.
-    * Designed the interactive console menu to properly route the user to Bank, ATM, or Admin functionalities.
-3. **Testing & Validation**: Verified that all logical queues behaved strictly according to FIFO and stacks according to LIFO. Ensured that the application runs without errors as per submission requirements.
-4. **Issues Encountered & Solutions**: A significant issue arose with Java's `Scanner` class skipping `String` inputs (like usernames) immediately after reading integers with `nextInt()`. I resolved this by inserting a `nextLine()` buffer clear after numerical inputs to properly consume the leftover newline character.
+## **C. Experimental Results**
+The following performance data was collected using `System.nanoTime()` on a Windows-based Java environment.
+
+### **Sorting Performance (Execution Time in ns)**
+| Array Size | Insertion Sort (ns) | Merge Sort (ns) |
+| :--- | :--- | :--- |
+| **Small (10)** | 7,000 | 7,300 |
+| **Medium (100)** | 69,800 | 52,100 |
+| **Large (1000)** | 2,532,400 | 164,000 |
+
+### **Searching Performance (Binary Search)**
+| Array Size | Execution Time (ns) |
+| :--- | :--- |
+| **Small (10)** | 3,100 |
+| **Medium (100)** | 1,500 |
+| **Large (1000)** | 1,900 |
+
+---
+
+
+## **D. Screenshots**
+![img_1.png](img_1.png)
+![img.png](img.png)
+---
+
+## **E. Reflection**
+This assignment demonstrated that algorithm efficiency is the most critical factor in software performance. For small datasets, the difference between basic and advanced sorting is negligible, but for 1000+ elements, Merge Sort is nearly 15 times faster than Insertion Sort. I also improved my skills in object-oriented design by separating logic into `Sorter`, `Searcher`, and `Experiment` classes.
