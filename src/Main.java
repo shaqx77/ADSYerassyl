@@ -1,5 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        new Experiment().run();
+        Experiment experiment = new Experiment();
+        experiment.runMultipleTests();
     }
 }
