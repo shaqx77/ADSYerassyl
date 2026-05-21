@@ -14,9 +14,9 @@ public class Graph {
         adjList.putIfAbsent(v.getId(), new ArrayList<>());
     }
 
-    public void addEdge(int from, int to) {
+    public void addEdge(int from, int to, int weight) {
         if (adjList.containsKey(from) && adjList.containsKey(to)) {
-            adjList.get(from).add(new Edge(from, to));
+            adjList.get(from).add(new Edge(from, to, weight));
         }
     }
 
@@ -24,7 +24,7 @@ public class Graph {
         for (int id : adjList.keySet()) {
             System.out.print("Vertex " + id + " connected to: ");
             for (Edge edge : adjList.get(id)) {
-                System.out.print(edge.getDestination() + " ");
+                System.out.print("[" + edge.getDestination() + "|w:" + edge.getWeight() + "] ");
             }
             System.out.println();
         }
@@ -64,6 +64,63 @@ public class Graph {
         for (Edge edge : adjList.getOrDefault(current, new ArrayList<>())) {
             if (!visited.contains(edge.getDestination())) {
                 dfsRecursive(edge.getDestination(), visited);
+            }
+        }
+    }
+
+    public void dijkstra(int start) {
+        if (!vertices.containsKey(start)) {
+            System.out.println("Starting vertex not found in graph.");
+            return;
+        }
+
+        int maxId = 0;
+        for (int id : vertices.keySet()) {
+            if (id > maxId) {
+                maxId = id;
+            }
+        }
+
+        int[] distances = new int[maxId + 1];
+        boolean[] visited = new boolean[maxId + 1];
+
+        Arrays.fill(distances, Integer.MAX_VALUE);
+        distances[start] = 0;
+
+        for (int i = 0; i < vertices.size(); i++) {
+            int currentVertex = -1;
+            int minDistance = Integer.MAX_VALUE;
+
+            for (int v : vertices.keySet()) {
+                if (!visited[v] && distances[v] < minDistance) {
+                    minDistance = distances[v];
+                    currentVertex = v;
+                }
+            }
+
+            if (currentVertex == -1) {
+                break;
+            }
+
+            visited[currentVertex] = true;
+
+            for (Edge edge : adjList.getOrDefault(currentVertex, new ArrayList<>())) {
+                int neighbor = edge.getDestination();
+                if (!visited[neighbor] && distances[currentVertex] != Integer.MAX_VALUE) {
+                    int newDist = distances[currentVertex] + edge.getWeight();
+                    if (newDist < distances[neighbor]) {
+                        distances[neighbor] = newDist;
+                    }
+                }
+            }
+        }
+
+        System.out.println("\n--- Dijkstra's Shortest Paths from Vertex " + start + " ---");
+        for (int v : vertices.keySet()) {
+            if (distances[v] == Integer.MAX_VALUE) {
+                System.out.println("To Vertex " + v + " -> Unreachable");
+            } else {
+                System.out.println("To Vertex " + v + " -> Total Distance: " + distances[v]);
             }
         }
     }
